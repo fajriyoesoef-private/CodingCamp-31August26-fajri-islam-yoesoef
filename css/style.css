@@ -1,0 +1,465 @@
+/* =====================
+   1. CSS Variables & Reset
+   ===================== */
+
+/* Light theme (default) */
+:root {
+  --bg:           #f5f5f5;
+  --bg-widget:    #ffffff;
+  --text:         #1a1a1a;
+  --text-muted:   #666666;
+  --border:       #dddddd;
+  --accent:       #4a90d9;
+  --accent-hover: #357abd;
+  --btn-bg:       #4a90d9;
+  --btn-text:     #ffffff;
+  --error:        #d32f2f;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg:           #1a1a2e;
+  --bg-widget:    #16213e;
+  --text:         #e0e0e0;
+  --text-muted:   #aaaaaa;
+  --border:       #444466;
+  --accent:       #64b5f6;
+  --accent-hover: #42a5f5;
+  --btn-bg:       #64b5f6;
+  --btn-text:     #1a1a2e;
+  --error:        #ef9a9a;
+}
+
+/* Minimal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base typography */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden; /* prevent horizontal scroll at any viewport width */
+}
+
+/* Enforce minimum readable font size on all text elements */
+body,
+input,
+button,
+select,
+textarea,
+label,
+p,
+li,
+a {
+  font-size: max(14px, 0.875rem);
+}
+
+/* Smooth color transitions on theme switch — scoped to avoid breaking animations */
+body,
+.widget,
+button,
+input,
+select,
+a {
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+/* =====================
+   2. Layout
+   ===================== */
+
+/* Header bar — spans full width, houses the theme toggle */
+.header-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--bg-widget);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+/* Dashboard grid container */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two-column on desktop */
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Single-column on mobile */
+@media (max-width: 767px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Widget card shared styles */
+.widget {
+  background: var(--bg-widget);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* =====================
+   3. Greeting Widget
+   ===================== */
+
+/* Time display — large, prominent clock */
+#time-display {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  line-height: 1;
+  margin: 0.5rem 0;
+}
+#date-display {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+#greeting {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+/* Custom name row */
+.custom-name-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+.custom-name-row input {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+.custom-name-row button {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+.custom-name-row button:hover {
+  background: var(--accent-hover);
+}
+#greeting-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin-top: 0.25rem;
+}
+
+/* =====================
+   4. Focus Timer Widget
+   ===================== */
+
+#timer-display {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-align: center;
+  margin: 0.75rem 0;
+}
+#timer-notification {
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+  min-height: 1.5em;
+  margin-bottom: 0.5rem;
+}
+.timer-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.timer-buttons button {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.timer-buttons button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.timer-buttons button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =====================
+   5. Todo List Widget
+   ===================== */
+
+.task-add-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.task-add-row input {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+.task-add-row button {
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+.task-add-row button:hover {
+  background: var(--accent-hover);
+}
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.sort-row select {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+#todo-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin-bottom: 0.5rem;
+}
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 350px;
+  overflow-y: auto;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  transition: background-color 150ms;
+}
+.task-item:hover {
+  background: var(--bg-widget);
+}
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+.task-text {
+  flex: 1;
+  word-break: break-word;
+}
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.task-item.editing .task-text,
+.task-item.editing .btn-edit-task {
+  display: none;
+}
+.task-edit-input {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+}
+.btn-edit-task,
+.btn-delete-task,
+.btn-save-task,
+.btn-cancel-task {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+.btn-edit-task:hover,
+.btn-delete-task:hover,
+.btn-save-task:hover,
+.btn-cancel-task:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+/* =====================
+   6. Quick Links Widget
+   ===================== */
+
+.link-add-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.link-add-row input {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+.link-add-row button {
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+}
+.link-add-row button:hover {
+  background: var(--accent-hover);
+}
+#links-error {
+  color: var(--error);
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin-bottom: 0.5rem;
+}
+#links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.3rem 0.4rem 0.3rem 0.75rem;
+  transition: background-color 150ms;
+}
+.link-item:hover {
+  background: var(--bg-widget);
+  border-color: var(--accent);
+}
+.link-btn {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.link-btn:hover {
+  text-decoration: underline;
+}
+.btn-delete-link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.btn-delete-link:hover {
+  color: var(--error);
+  background: rgba(211,47,47,0.1);
+}
+
+/* =====================
+   7. Theme Toggle
+   ===================== */
+
+/* Pill-shaped theme toggle button */
+#theme-toggle {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+#theme-toggle:hover {
+  background: var(--accent-hover);
+}
+
+/* =====================
+   8. Responsive
+   ===================== */
+
+/* Extra small screens — stack inputs vertically */
+@media (max-width: 480px) {
+  .task-add-row,
+  .link-add-row,
+  .custom-name-row {
+    flex-direction: column;
+  }
+  .task-add-row input,
+  .link-add-row input,
+  .custom-name-row input {
+    width: 100%;
+  }
+  .timer-buttons button {
+    flex: 1;
+  }
+  #time-display {
+    font-size: 2.5rem;
+  }
+  #timer-display {
+    font-size: 3rem;
+  }
+}
+/* Larger screens — expand the max-width */
+@media (min-width: 1400px) {
+  .dashboard {
+    max-width: 1400px;
+  }
+}

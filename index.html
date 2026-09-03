@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+  <script>
+    (function(){
+      var t = localStorage.getItem('ld_theme');
+      if (t) { try { t = JSON.parse(t); } catch(e){} }
+      document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <header class="header-bar">
+    <button id="theme-toggle" aria-label="Toggle theme">Toggle Theme</button>
+  </header>
+
+  <!-- Dashboard grid -->
+  <main class="dashboard">
+
+  <!-- Greeting Widget -->
+  <section id="greeting-widget" class="widget" aria-labelledby="greeting">
+    <h1 id="greeting">Hello!</h1>
+    <p id="time-display" aria-live="polite"></p>
+    <p id="date-display"></p>
+    <div class="custom-name-row">
+      <label for="custom-name-input">Nama Anda:</label>
+      <input type="text" id="custom-name-input" maxlength="50" placeholder="Masukkan nama Anda" />
+      <button id="btn-save-name">Simpan</button>
+      <button id="btn-clear-name">Hapus</button>
+    </div>
+    <p id="greeting-error" role="alert" aria-live="polite"></p>
+  </section>
+
+  <!-- Focus Timer Widget -->
+  <section id="timer-widget" class="widget" aria-labelledby="timer-heading">
+    <h2 id="timer-heading">Timer Fokus</h2>
+    <p id="timer-display" aria-live="polite">25:00</p>
+    <div role="alert" id="timer-notification" aria-live="assertive"></div>
+    <div class="timer-buttons">
+      <button id="btn-start">Mulai</button>
+      <button id="btn-stop">Berhenti</button>
+      <button id="btn-reset">Reset</button>
+    </div>
+  </section>
+
+  <!-- Todo List Widget -->
+  <section id="todo-widget" class="widget" aria-labelledby="todo-heading">
+    <h2 id="todo-heading">Daftar Tugas</h2>
+    <div class="task-add-row">
+      <label for="task-input">Tugas baru:</label>
+      <input type="text" id="task-input" maxlength="200" placeholder="Tambah tugas…" />
+      <button id="btn-add-task">Tambah</button>
+    </div>
+    <div class="sort-row">
+      <label for="sort-select">Urutkan:</label>
+      <select id="sort-select">
+        <option value="creation">Urutan Tambah</option>
+        <option value="alphabetical">Alfabetis</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
+    <p id="todo-error" role="alert" aria-live="polite"></p>
+    <ul id="task-list" aria-label="Task list"></ul>
+  </section>
+
+  <!-- Quick Links Widget -->
+  <section id="quick-links-widget" class="widget" aria-labelledby="links-heading">
+    <h2 id="links-heading">Tautan Cepat</h2>
+    <div class="link-add-row">
+      <label for="link-label-input">Label:</label>
+      <input type="text" id="link-label-input" maxlength="50" placeholder="Label tautan" />
+      <label for="link-url-input">URL:</label>
+      <input type="url" id="link-url-input" maxlength="2048" placeholder="https://example.com" />
+      <button id="btn-add-link">Tambah Tautan</button>
+    </div>
+    <p id="links-error" role="alert" aria-live="polite"></p>
+    <div id="links-container" aria-label="Quick links"></div>
+  </section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

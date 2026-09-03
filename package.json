@@ -1,0 +1,12 @@
+{
+  "name": "life-dashboard-todo-app",
+  "version": "1.0.0",
+  "description": "Life Dashboard - a personal new-tab web app with greeting, timer, todo, quick links, and theme toggle",
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "fast-check": "^3.22.0",
+    "vitest": "^2.1.0"
+  }
+}
